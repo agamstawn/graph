@@ -5,16 +5,16 @@
 
  <%= line_chart @visitors.group_by_day(:visit_at, format: "%B %d, %Y").count, discrete: true %>
 
- <%= line_chart   Visitor.pluck("region").uniq.map { |c| { name: c, data: @visitors.where(region: c).group_by_day(:visit_at, format: "%B %d, %Y").count }  }, discrete: true %>
+ <%= line_chart   Visitor.pluck("region").uniq.map { |c| { name: c, data: @visitors.where(region: c).group_by_day(:visit_at, format: "%B %d, %Y").count }  }, discrete: true, library: {backgroundColor: "#eee"} %>
 
  <%= pie_chart @visitors.group(:region).count %>
 
- <%= column_chart Visitor.group_by_hour_of_day(:created_at, format: "%l %P").count %>
+ <%= column_chart Visitor.group_by_hour_of_day(:created_at, format: "%l %P").count, library: {backgroundColor: "#eee"} %>
  <h1><strong>Stacked</strong></h1>
 
  <%= column_chart @visitors.group(:region).count, stacked: true %>
 
- <%= bar_chart @visitors.group(:region).count %>
+ <%= bar_chart @visitors.group(:region).count, library: {backgroundColor: "#eee"} %>
 
  <%= geo_chart @visitors.group(:region).count %>
 
