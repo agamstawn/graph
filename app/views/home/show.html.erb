@@ -1,0 +1,28 @@
+<h1>Home#show</h1>
+<p>Find me in app/views/home/show.html.erb</p>
+
+ <%= line_chart Visitor.group_by_day(:visit_at).count, discrete: true,  library: {backgroundColor: "#eee"} %>
+
+ <%= line_chart @visitors.group_by_day(:visit_at, format: "%B %d, %Y").count, discrete: true %>
+
+ <%= line_chart   Visitor.pluck("region").uniq.map { |c| { name: c, data: @visitors.where(region: c).group_by_day(:visit_at, format: "%B %d, %Y").count }  }, discrete: true %>
+
+ <%= pie_chart @visitors.group(:region).count %>
+
+ <%= column_chart Visitor.group_by_hour_of_day(:created_at, format: "%l %P").count %>
+ <h1><strong>Stacked</strong></h1>
+
+ <%= column_chart @visitors.group(:region).count, stacked: true %>
+
+ <%= bar_chart @visitors.group(:region).count %>
+
+ <%= geo_chart @visitors.group(:region).count %>
+
+ <%= geo_chart({"France" => 10, "Indonesia" => 99, "Russia" => 45}) %>
+
+<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>
+
+
+<%= line_chart({20.day.ago => 5, 1368174456 => 4, "2013-05-07 00:00:00 UTC" => 7}) %>
+
+<%= area_chart @visitors.group_by_day(:visit_at).maximum(:load_time) %>
