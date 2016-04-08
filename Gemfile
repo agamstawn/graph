@@ -15,7 +15,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
- gem 'chartkick', '~> 1.2.4' 
+ gem 'chartkick' 
  gem 'groupdate', '~> 2.1.1' 
  gem 'active_median', '~> 0.1.0'
  

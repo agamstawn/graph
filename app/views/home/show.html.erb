@@ -1,28 +1,39 @@
-<h1>Home#show</h1>
-<p>Find me in app/views/home/show.html.erb</p>
+<h2><strong>Line Chart berdasarkan waktu berkunjung</strong></h2>
 
- <%= line_chart Visitor.group_by_day(:visit_at).count, discrete: true,  library: {backgroundColor: "#eee"} %>
+ <%= line_chart @visitors.group_by_day(:visit_at, format: "%B %d, %Y").count, discrete: true ,  library: {backgroundColor: "#eee"} %>
 
- <%= line_chart @visitors.group_by_day(:visit_at, format: "%B %d, %Y").count, discrete: true %>
+ <%= line_chart   Visitor.pluck("region").uniq.map { |c| { name: c, data: @visitors.where(region: c).group_by_day(:visit_at, format: "%B %d, %Y").count }  }, discrete: true %>
+<h2><strong>Pie Chart</strong></h2>
 
- <%= line_chart   Visitor.pluck("region").uniq.map { |c| { name: c, data: @visitors.where(region: c).group_by_day(:visit_at, format: "%B %d, %Y").count }  }, discrete: true, library: {backgroundColor: "#eee"} %>
+ <%= pie_chart @visitors.group(:region).count ,  library: {backgroundColor: "#eee"}%>
 
- <%= pie_chart @visitors.group(:region).count %>
 
- <%= column_chart Visitor.group_by_hour_of_day(:created_at, format: "%l %P").count, library: {backgroundColor: "#eee"} %>
- <h1><strong>Stacked</strong></h1>
+ <h1><strong>Column Chart</strong></h1>
 
  <%= column_chart @visitors.group(:region).count, stacked: true %>
 
+<h2><strong>Bar Chart Pengunjung berdasarkan Kota</strong></h2>
+
  <%= bar_chart @visitors.group(:region).count, library: {backgroundColor: "#eee"} %>
 
- <%= geo_chart @visitors.group(:region).count %>
+<h2><strong>Geo Chart </strong></h2>
 
  <%= geo_chart({"France" => 10, "Indonesia" => 99, "Russia" => 45}) %>
 
-<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>
+<h2><strong>Pie Chart </strong></h2>
 
+<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>
 
 <%= line_chart({20.day.ago => 5, 1368174456 => 4, "2013-05-07 00:00:00 UTC" => 7}) %>
 
+<h2><strong>Area Chart </strong></h2>
+
 <%= area_chart @visitors.group_by_day(:visit_at).maximum(:load_time) %>
+
+<h2><strong>Timeline</strong></h2>
+<%= timeline [
+  ["Washington", "1789-04-29", "1797-03-03"],
+  ["Adams", "1797-03-03", "1801-03-03"],
+  ["Jefferson", "1801-03-03", "1809-03-03"]
+] %>	
+
